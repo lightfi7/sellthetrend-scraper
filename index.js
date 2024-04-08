@@ -1,6 +1,7 @@
 require("dotenv").config();
 const { makeConnection } = require("./engine/database");
-const engine = require("./engine");
+const amazonEngine = require("./engine/services/amazon");
+const nexusEngine = require("./engine/services/nexus");
 const amazonTask = require("./engine/tasks/amazon");
 const nexusTask = require("./engine/tasks/nexus");
 const amazonScheduler = require("./engine/schedulers/amazon");
@@ -18,12 +19,18 @@ const makeNexusEndpoints = require("./engine/endpoints/nexus");
   });
 
   //#region  SEVICE
-  engine.configService({
+  amazonEngine.configService({
     headless: false,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
-  engine.initEndpoints((app, page) => makeAmazonEndpoints(app, page));
-  const server = await engine.startService();
+  amazonEngine.initEndpoints((app, page) => makeAmazonEndpoints(app, page));
+  const amazonServer = await amazonEngine.startService();
+  nexusEngine.configService({
+    headless: false,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
+  nexusEngine.initEndpoints((app, page) => makeAmazonEndpoints(app, page));
+  const nexusServer = await nexusEngine.startService();
   //#endregion
 
   //#region TASKS
@@ -45,6 +52,6 @@ const makeNexusEndpoints = require("./engine/endpoints/nexus");
   //#endregion
 
   // await new Promise((resolve) => setTimeout(resolve, 1000));
-  // await engine.stopService(server);
+  // await amazonEngine.stopService(server);
   console.log(";)");
 })();

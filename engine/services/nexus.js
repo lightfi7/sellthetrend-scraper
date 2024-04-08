@@ -36,8 +36,8 @@ class Engine {
       await this.page.waitForSelector("#email", {
         timeout: process.env.WAIT_TIME,
       });
-      await this.page.type("#email", process.env.EMAIL);
-      await this.page.type("#password", process.env.PASSWORD);
+      await this.page.type("#email", process.env.NEXUS_EMAIL);
+      await this.page.type("#password", process.env.NEXUS_PASSWORD);
       await this.page.click("button[type=submit]");
       await Promise.all([
         await this.page.click("button[type=submit]"),
@@ -88,8 +88,10 @@ class Engine {
 
   startService = async () => {
     await this.beginBrowser();
-    return this.app.listen(process.env.PORT || 5000, () => {
-      console.log(`Server is running on port ${process.env.PORT || 5000}`);
+    return this.app.listen(process.env.NEXUS_PORT || 5000, () => {
+      console.log(
+        `Server is running on port ${process.env.NEXUS_PORT || 5000}`
+      );
     });
   };
 
