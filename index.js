@@ -25,16 +25,16 @@ const makeNexusEndpoints = require("./engine/endpoints/nexus");
   });
   amazonEngine.initEndpoints((app, page) => makeAmazonEndpoints(app, page));
   const amazonServer = await amazonEngine.startService();
-  nexusEngine.configService({
-    headless: false,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
-  nexusEngine.initEndpoints((app, page) => makeAmazonEndpoints(app, page));
-  const nexusServer = await nexusEngine.startService();
+  // nexusEngine.configService({
+  //   headless: false,
+  //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  // });
+  // nexusEngine.initEndpoints((app, page) => makeAmazonEndpoints(app, page));
+  // const nexusServer = await nexusEngine.startService();
   //#endregion
 
   //#region TASKS
-  nexusTask.init();
+  // nexusTask.init();
   amazonTask.init();
   //#endregion
 
@@ -48,7 +48,7 @@ const makeNexusEndpoints = require("./engine/endpoints/nexus");
     console.log("nexus");
   });
   amazonScheduler.startScheduler();
-  nexusScheduler.startScheduler();
+  // nexusScheduler.startScheduler();
   //#endregion
 
   // await new Promise((resolve) => setTimeout(resolve, 1000));

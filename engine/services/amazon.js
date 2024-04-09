@@ -1,8 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const puppeteer = require("puppeteer-extra");
+const UserAgent = require("user-agents");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 puppeteer.use(StealthPlugin());
+const { executablePath } = require("puppeteer");
 
 class Engine {
   //#region BROWSER
@@ -23,7 +25,9 @@ class Engine {
     this.browser = await puppeteer.launch({
       headless: headless,
       args: args,
+      executablePath: executablePath(),
     });
+    const userAgent = new UserAgent();
     this.page = await this.browser.newPage();
   };
 
@@ -33,6 +37,7 @@ class Engine {
         timeout: process.env.WAIT_TIME,
         waitUntil: "networkidle0",
       });
+      await this.page.screenshot({ path: "screenshot.png", fullPage: true });
       await this.page.waitForSelector("#email", {
         timeout: process.env.WAIT_TIME,
       });
