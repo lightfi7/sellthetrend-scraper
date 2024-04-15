@@ -127,6 +127,12 @@ class AmazonTask {
       for (let j = 0; j < elements.length; j++) {
         let element = $(elements[j]);
         let product = parseProduct($, element);
+        if (
+          product.imageURL == null ||
+          product.imageURL == "" ||
+          product.imageURL == undefined
+        )
+          continue;
         if (keys.includes(product.productId)) {
           Product.findOne({ productId: product.productId })
             .then(async (product_) => {
