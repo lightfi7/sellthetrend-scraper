@@ -51,7 +51,7 @@ class NexusTask {
       "nexus_suppliers",
       await makeSchema(supplierSchema)
     );
-    this.limit = 10;
+    this.limit = 2;
   };
 
   fetch = async (_subject = "nexus", category, page = 1) => {
@@ -194,8 +194,8 @@ class NexusTask {
       }
       await new Promise((resolve) => setTimeout(resolve, 3000));
     }
-    this.limit += 10;
-    if (this.limit > 100) this.limit = 0;
+    this.limit += 2;
+    if (this.limit > 10) this.limit = 0;
   };
 }
 

@@ -19,36 +19,36 @@ const makeNexusEndpoints = require("./engine/endpoints/nexus");
   });
 
   //#region  SEVICE
-  amazonEngine.configService({
-    headless: false,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
-  amazonEngine.initEndpoints((app, page) => makeAmazonEndpoints(app, page));
-  const amazonServer = await amazonEngine.startService();
-  // nexusEngine.configService({
+  // amazonEngine.configService({
   //   headless: false,
   //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
   // });
-  // nexusEngine.initEndpoints((app, page) => makeAmazonEndpoints(app, page));
-  // const nexusServer = await nexusEngine.startService();
+  // amazonEngine.initEndpoints((app, page) => makeAmazonEndpoints(app, page));
+  // const amazonServer = await amazonEngine.startService();
+  nexusEngine.configService({
+    headless: false,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
+  nexusEngine.initEndpoints((app, page) => makeNexusEndpoints(app, page));
+  const nexusServer = await nexusEngine.startService();
   //#endregion
 
   //#region TASKS
-  // nexusTask.init();
+  nexusTask.init();
   amazonTask.init();
   //#endregion
 
   //#region SCHEDULERS
   // amazonScheduler.putSchedTask("fetch", "*/2 * * * *", amazonTask.run);
-  // nexusScheduler.putSchedTask("fetch", "*/2 * * * *", nexusTask.run);
-  amazonScheduler.putSchedTask("fetch", "*/2 * * * *", () => {
-    console.log("amazon");
-  });
+  nexusScheduler.putSchedTask("fetch", "*/2 * * * *", nexusTask.run);
+  // amazonScheduler.putSchedTask("fetch", "*/2 * * * *", () => {
+  //   console.log("amazon");
+  // });
   nexusScheduler.putSchedTask("fetch", "*/2 * * * *", () => {
     console.log("nexus");
   });
-  amazonScheduler.startScheduler();
-  // nexusScheduler.startScheduler();
+  // amazonScheduler.start();
+  nexusScheduler.start();
   //#endregion
 
   // await new Promise((resolve) => setTimeout(resolve, 1000));

@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const puppeteer = require("puppeteer-extra");
+const useProxy = require("@lem0-packages/puppeteer-page-proxy");
 const UserAgent = require("user-agents");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 puppeteer.use(StealthPlugin());
@@ -29,6 +30,8 @@ class Engine {
     });
     const userAgent = new UserAgent();
     this.page = await this.browser.newPage();
+    await useProxy(this.page, "socks5://kysng:rs62w5gw@46.232.112.77:5432");
+
   };
 
   loginBrower = async () => {

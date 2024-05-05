@@ -109,7 +109,7 @@ class AmazonTask {
       "amazon_charts",
       await makeSchema(chartSchema)
     );
-    this.limit = 10;
+    this.limit = 2;
   };
 
   fetch = async (category, page) => {
@@ -182,8 +182,8 @@ class AmazonTask {
         await this.fetch(Categories[c], i);
       }
     }
-    this.limit += 10;
-    if (this.limit > 100) this.limit = 0;
+    this.limit += 2;
+    if (this.limit > 10) this.limit = 0;
   };
 }
 

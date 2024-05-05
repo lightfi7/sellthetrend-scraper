@@ -21,13 +21,15 @@ class Scheduler {
   };
 
   start = () => {
-    for (const task of scheduledTasks) {
+    for (const name of Object.keys(scheduledTasks)) {
+      const task = scheduledTasks[name];
       task.start();
     }
   };
 
   stop = () => {
-    for (const task of scheduledTasks) {
+    for (const name of Object.keys(scheduledTasks)) {
+      const task = scheduledTasks[name];
       task.stop();
     }
   };
